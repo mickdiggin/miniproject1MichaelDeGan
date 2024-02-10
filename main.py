@@ -12,15 +12,46 @@
 # (10/10 points) I will be checking out the main branch of your project. Please be sure to include a requirements.txt file which contains all the packages that need installed. You can create this fille with the output of pip freeze at the terminal prompt.
 # (20/20 points) There should be a README.md file in your project that explains what your project is, how to install the pip requirements, and how to execute the program. Please use the GitHub flavor of Markdown.
 
-import pprint
 import numpy as np
 import matplotlib.pyplot as plt
 import yfinance as yf
 
-tickers = ["MSFT"]
+def getClosing(ticker):
+    # Get the closing price for the last 10 trading days
+    stock = yf.Ticker(ticker)
+    # get historical market data
+    hist = stock.history(period="10d")
 
-msft = yf.Ticker(tickers[0] )
+    closingList = []
 
-# get all stock info
+    for price in hist['Close']:
+        closingList.append(price)
 
-print(msft.info)
+    return closingList
+
+stocks = ["MSFT", "AAPL", "GME", "AMZN", "FB"]
+
+for stock in stocks:
+    stockClosing = np.array(getClosing(stock))
+    days = list(range(1, len(stockClosing) + 1))
+
+    # This plots the graph
+    plt.plot(days, stockClosing)
+
+    # Get our min and max for y
+    prices = getClosing(stock)
+    prices.sort()
+    low_price = prices[0]
+    high_price = prices[-1]
+
+    # Set our x-axis min and max
+    plt.axis([1, 10, low_price - 2, high_price + 2])
+
+    # Set our labels for the graph
+    plt.xlabel("Days")
+    plt.ylabel("Closing Price")
+    plt.title("Closing Price for " + stock)
+
+    # Show the graph
+    plt.show()
+
