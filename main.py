@@ -29,7 +29,7 @@ def getClosing(ticker):
 
     return closingList
 
-stocks = ["MSFT", "AAPL", "GME", "AMZN", "FB"]
+stocks = ["MSFT", "AAPL", "GME", "REPO", "X"]
 
 for stock in stocks:
     stockClosing = np.array(getClosing(stock))
@@ -52,6 +52,9 @@ for stock in stocks:
     plt.ylabel("Closing Price")
     plt.title("Closing Price for " + stock)
 
+    # Saves plot
+    saveFile = "charts/" + stock + ".png"
+    plt.savefig(saveFile)
+
     # Show the graph
     plt.show()
-
