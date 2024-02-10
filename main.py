@@ -13,7 +13,6 @@
 # (20/20 points) There should be a README.md file in your project that explains what your project is, how to install the pip requirements, and how to execute the program. Please use the GitHub flavor of Markdown.
 
 # Suppressing all FutureWarnings because they are cluttering the console.
-from urllib.error import HTTPError
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import numpy as np
@@ -35,6 +34,12 @@ def getClosing(ticker):
 
 def printGraph(stock):
     stockClosing = np.array(getClosing(stock))
+    # This conditional had to be added to account for all of the errors that Ticker throws, as well as the fact that
+    # getClosing() will just return an empty array for invalid symbols, which leads to index errors.
+    if stockClosing.size == 0:
+        print("10 day closing prices for this stock are unavailable. Graphing operation failed.")
+        return
+
     days = list(range(1, len(stockClosing) + 1))
 
     # This plots the graph
@@ -69,18 +74,19 @@ def getStocks():
         while True:
             print("Enter stock ticker " + str(i))
             userValue = input("> ")
-            try:
-                print("Checking input...")
-                stock = yf.Ticker(userValue)
-                stock.info
-                stocks.append(stock)
+            stock = yf.Ticker(userValue)
+            print("Checking ticker...")
+
+            # This section had to be refactored because try-except statements cannot handle the various types of errors
+            # that Ticker.info throws. Note: dict info will always have 1 entry, even for invalid ticker symbols.
+            if len(stock.info) > 1:
+                stocks.append(userValue)
                 print("Valid input.")
                 break
-            except HTTPError:
-                print("Invalid stock. Please try again.")
+            else:
+                print("Invalid ticker. Please try again.")
 
     return stocks
-
 
 # Start of program
 try:
@@ -89,6 +95,7 @@ try:
 except FileExistsError:
     pass
 
+#Collect and validate symbols from end-user, output as graphs, store in directory "charts."
 for stock in getStocks():
     getClosing(stock)
     printGraph(stock)
