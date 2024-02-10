@@ -1,6 +1,7 @@
 # INF601 - Advanced Programming in Python
 # Michael DeGan
 # Mini Project 1
+import os
 
 # (5/5 points) Initial comments with your name, class and project at the top of your .py file.
 # (5/5 points) Proper import of packages used.
@@ -15,7 +16,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import yfinance as yf
-
+from pathlib import Path
 def getClosing(ticker):
     # Get the closing price for the last 10 trading days
     stock = yf.Ticker(ticker)
@@ -28,6 +29,12 @@ def getClosing(ticker):
         closingList.append(price)
 
     return closingList
+
+try:
+    #Create our charts folder.
+    Path("charts").mkdir()
+except FileExistsError:
+    pass
 
 stocks = ["MSFT", "AAPL", "GME", "REPO", "X"]
 
