@@ -1,6 +1,7 @@
 # miniproject1MichaelDeGan
 
 INF601 Advanced Programming with Python
+
 Michael DeGan
 
 ## Description
@@ -13,6 +14,7 @@ pip install -r requirements.txt
 ```
 
 ## How to run
+In a terminal window, please type the following:
 ```
 python main.py
 ```
