@@ -13,6 +13,7 @@
 # (20/20 points) There should be a README.md file in your project that explains what your project is, how to install the pip requirements, and how to execute the program. Please use the GitHub flavor of Markdown.
 
 # Suppressing all FutureWarnings because they are cluttering the console.
+from urllib.error import HTTPError
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import numpy as np
@@ -32,15 +33,7 @@ def getClosing(ticker):
 
     return closingList
 
-try:
-    #Create our charts folder.
-    Path("charts").mkdir()
-except FileExistsError:
-    pass
-
-stocks = ["MSFT", "AAPL", "GME", "REPO", "X"]
-
-for stock in stocks:
+def printGraph(stock):
     stockClosing = np.array(getClosing(stock))
     days = list(range(1, len(stockClosing) + 1))
 
@@ -67,3 +60,35 @@ for stock in stocks:
 
     # Show the graph
     plt.show()
+
+def getStocks():
+    stocks = []
+
+    print("Please enter 5 stocks to graph:")
+    for i in range(1, 6):
+        while True:
+            print("Enter stock ticker " + str(i))
+            userValue = input("> ")
+            try:
+                print("Checking input...")
+                stock = yf.Ticker(userValue)
+                stock.info
+                stocks.append(stock)
+                print("Valid input.")
+                break
+            except HTTPError:
+                print("Invalid stock. Please try again.")
+
+    return stocks
+
+
+# Start of program
+try:
+    #Create our charts folder.
+    Path("charts").mkdir()
+except FileExistsError:
+    pass
+
+for stock in getStocks():
+    getClosing(stock)
+    printGraph(stock)
