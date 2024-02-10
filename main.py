@@ -78,7 +78,7 @@ def getStocks():
             print("Checking ticker...")
 
             # This section had to be refactored because try-except statements cannot handle the various types of errors
-            # that Ticker.info throws. Note: dict info will always have 1 entry, even for invalid ticker symbols.
+            # that Ticker.info throws. Note: stock.info will always have 1 entry, even for invalid ticker symbols.
             if len(stock.info) > 1:
                 stocks.append(userValue)
                 print("Valid input.")
