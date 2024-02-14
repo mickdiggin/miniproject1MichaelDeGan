@@ -1,21 +1,49 @@
-# miniproject1MichaelDeGan
+### INF601 - Advanced Programming in Python
+### Michael DeGan
+### Mini Project 1
 
-INF601 Advanced Programming with Python
 
-Michael DeGan
+# Mini Project 1
+
+This project will utilize yFinance to gather the last 10 trading days of 5 stocks. It will put this information into a 
+NumPy array and then use Matplotlib in order to create 5 graphs, then output as PNG files in the "charts" directory, 
+which will be saved automatically in the current working directory. 
 
 ## Description
-This project will be using the packages NumPy and Matplotlib to create the graphs of the closing prices of 5 stocks for 
-the last 10 days and output them as PNG files.
 
-## Pip install instructions
-Please run the following:
+An in-depth paragraph about your project and overview of use.
+
+## Getting Started
+
+### Install requirements with PIP
+
 ```
 pip install -r requirements.txt
 ```
 
-## How to run
-In a terminal window, please type the following:
+### Executing program
 ```
 python main.py
 ```
+
+## Authors
+
+Contributors names and contact info
+
+Michael DeGan
+
+## Version History
+
+* 0.1
+    * Initial Release
+
+## License
+
+This project is public domain because I am a saintly man. Proprietary components, such as the various modules, are under 
+various licenses.
+
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+* [matplotlib](https://matplotlib.org/stable/api/pyplot_summary.html#module-matplotlib.pyplot)
+* [AutomatetheBoringStuff.com](https://automatetheboringstuff.com/2e/chapter9/)
